@@ -1,0 +1,4 @@
+.env
+node_modules
+access.log
+db_config.json
