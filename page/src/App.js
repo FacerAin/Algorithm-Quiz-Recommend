@@ -1,14 +1,19 @@
 import './App.css';
-import LoginForm from './components/auth/LoginForm'
-import RegisterForm from './components/auth/RegisterForm'
-import CardForm from './components/card/CardForm'
-import ApplyForm from './components/apply/ApplyForm'
-import HomeForm from './components/home/HomeForm'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import HomePage from './pages/HomePage'
+import { Route } from 'react-router-dom';
+import ApplyPage from './pages/ApplyPage';
 
 function App() {
   return (
     <div className="App">
-      <HomeForm />
+      <>
+      <Route component={HomePage} path={['/@:username', '/']} exact/>
+      <Route component={LoginPage} path="/login"/>
+      <Route component={RegisterPage} path="/register"/>
+      <Route component={ApplyPage} path="/apply"/>
+      </>
     </div>
   );
 }

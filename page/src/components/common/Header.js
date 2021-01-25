@@ -4,6 +4,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import {BiRefresh} from 'react-icons/bi'
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAppBar() {
+export default function Header({ user, onLogout, onSync }) {
   const classes = useStyles();
 
   return (
@@ -28,7 +30,23 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             내일은 코딩왕
           </Typography>
-          <Button color="inherit">로그인</Button>
+          {user ? (
+            <>
+            <Typography className={classes.title}>
+              {user.id}
+            </Typography>
+            <Button onClick= {onSync} color="inherit">
+            <BiRefresh/>
+            </Button>
+            
+              <Button color="inherit" onClick={onLogout}>로그아웃</Button></>
+
+          ) : (
+              <>
+
+                <Button to="/login" color="inherit">로그인</Button>
+              </>
+            )}
         </Toolbar>
       </AppBar>
     </div>

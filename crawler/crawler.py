@@ -13,11 +13,6 @@ load_dotenv(verbose=True)
 users_pd = pd.DataFrame(columns=['u_name', 'u_bj_id'])
 users = set()
 problems = set()
-# TODO
-# 1. 경희대 아이디 크롤링 -> 유저
-# 분류별 전체 크롤링도
-# 2. 각 학생들이 푼 문제 ID 저장
-# 3. 푼 문제 ID의 세부 정보 저장
 
 def setup():
     db = pymysql.connect(host='127.0.0.1', user='root', port=int(os.getenv('PORT')), db='algodb', charset='utf8', passwd = str(os.getenv('PASSWORD')) )
@@ -28,7 +23,6 @@ def save_user(db, db_cursor):
     query = '''INSERT INTO user (u_id, u_name, u_password) VALUES ('{}', '{}', "{}");'''.format('syw5141','송용우','1234')
     print(query)
     db_cursor.execute(query)
-    db.commit()
 
 def save_problem_info(db, db_cursor, problems_pd):
     for i in problems_pd.index:
@@ -44,6 +38,14 @@ def save_problem_info(db, db_cursor, problems_pd):
         db_cursor.execute(query)
     db.commit()
 
+def save_category(db, db_cursor, problems_pd):
+    for i in problems_pd.index:
+        category_list = problems_pd.loc[i]['category'][1:-1].replace('"','').split(', ')
+        for item in category_list:
+            query = '''INSERT INTO category (p_id, category) VALUES ('{}', '{}');'''.format(i, item)
+            db_cursor.execute(query)
+    db.commit()
+            
 
 
 
@@ -240,9 +242,14 @@ if __name__=="__main__":
     #
     #problems_pd = problems_pd.sort_index()
     problems_pd = pd.read_csv('problem_pd.csv')
-    save_problem_info(db, db_cursor, problems_pd)
+    save_category(db, db_cursor, problems_pd)
+
+
+
+
+    #save_problem_info(db, db_cursor, problems_pd)
 
 
    
-    pd_to_csv(problems_pd)
+    #pd_to_csv(problems_pd)
     #save_user(db, db_cursor)

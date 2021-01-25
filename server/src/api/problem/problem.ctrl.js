@@ -1,22 +1,21 @@
-const getConnection = require('../../config/db');
+const DB = require('../../config/db')
 
 
 /*
 GET api/problem
 */
-exports.get = async(ctx) => {
-    getConnection((err, connection) => {
-        console.log(err)
-        connection.query('SELECT * FROM PROBLEM', (err, rows) => {
-            
-            if(!err){
-                console.log(rows)
-            }else{
-                throw err
-            }
-            connection.release()
-            console.log(rows)
-        })
-    })
+exports.get = async (ctx) => {
+    res = await DB('GET', "SELECT * FROM PROBLEM")
+    ctx.body = res
 }
 
+
+/*
+GET api/problem:id
+*/
+exports.getId = async (ctx) => {
+    const {id} = ctx.params
+    const query = `SELECT * FROM PROBLEM WHERE p_id = ${id}`
+    res = await DB('GET', query)
+    ctx.body = res
+}

@@ -4,5 +4,6 @@ const problemCtrl = require('./problem.ctrl')
 
 
 problem.get('/',problemCtrl.get)
+problem.get('/:id',problemCtrl.getId)
 
 module.exports = problem

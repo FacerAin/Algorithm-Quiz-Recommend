@@ -9,6 +9,16 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Copyright from '../common/Copyright'
+import styled from 'styled-components';
+
+const ErrorMessage = styled.div`
+  color: red;
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+`;
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignInSide() {
+export default function LoginForm({ type, form, onChange, onSubmit, error }) {
   const classes = useStyles();
 
   return (
@@ -53,7 +63,7 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             로그인
           </Typography>
-          <form className={classes.form} noValidate>
+          <form onSubmit={onSubmit} className={classes.form} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -61,8 +71,10 @@ export default function SignInSide() {
               fullWidth
               id="id"
               label="ID"
-              name="id"
+              name="username"
               autoFocus
+              onChange={onChange}
+          value={form.username}
             />
             <TextField
               variant="outlined"
@@ -74,6 +86,8 @@ export default function SignInSide() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={onChange}
+              value={form.password}
             />
             <Button
               type="submit"
@@ -84,11 +98,12 @@ export default function SignInSide() {
             >
               로그인
             </Button>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
             <Grid container>
               <Grid item xs>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/register" variant="body2">
                   {"계정이 없으신가요? 회원가입"}
                 </Link>
               </Grid>

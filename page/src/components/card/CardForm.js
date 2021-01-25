@@ -5,11 +5,15 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {BsPencilSquare} from 'react-icons/bs'
+import { Link, withRouter } from 'react-router-dom';
+
+
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -59,45 +63,48 @@ const useStyles = makeStyles((theme) => ({
 const tier = {
  
     title: 'Free',
-    price: '1000',
-    description: ['A + B'],
+    price: '진행 중',
+    description: ['A+B', '1000'],
     buttonText: '풀기',
     buttonVariant: 'outlined',
  
 };
 
-export default function Pricing() {
+function Pricing({history, data}) {
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <CssBaseline />
 
-            <Grid item key={tier.title} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={4}>
+            <Grid item key={tier.title} xs={12} sm={6} md={6}>
               <Card>
+              <CardActionArea>
                 <CardContent>
-                <BsPencilSquare/>
+                <img width = "70rem" src = {process.env.PUBLIC_URL + '/assets/finish.png'}/>
                   <div className={classes.cardPricing}>
-                    <Typography component="h2" variant="h3" color="textPrimary">
-                      {tier.price}
+                    <Typography component="h4" variant="h4" color="textPrimary">
+                      {data.price}
                     </Typography>
                   </div>
                   <ul>
-                    {tier.description.map((line) => (
-                      <Typography component="li" variant="subtitle1" align="center" key={line}>
-                        {line}
+                  <Typography component="h3" variant="subtitle1" align="center">
+                        {data.p_bj_id}
                       </Typography>
-                    ))}
+                      <Typography component="h3" variant="subtitle1" align="center">
+                        {data.p_name}
+                      </Typography>
+       
                   </ul>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant={tier.buttonVariant} color="primary">
-                    {tier.buttonText}
-                  </Button>
                 </CardActions>
+                </CardActionArea>
               </Card>
       </Grid>
 
     </React.Fragment>
   );
 }
+
+export default withRouter(Pricing)

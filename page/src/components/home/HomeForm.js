@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container';
 import Copyright from '../common/Copyright'
 import Header from '../common/Header'
 import CardForm from '../card/CardForm'
+import InfoForm from '../card/InfoForm'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,21 +34,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ApplyForm() {
+export default function HomeForm({ challenge }) {
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <CssBaseline />
-      <Header />
       <main className={classes.layout}>
-      <Container maxWidth="md" component="main">
-      <Grid container spacing={5} alignItems="flex-end">
-          <CardForm/>
-          <CardForm/>
-          <CardForm/>
+        <Container maxWidth="md" component="main">
+          <Grid container alignItems="center"
+        justify="center" spacing={3}>
+        <InfoForm/>
+        </Grid>
+      
+          <Grid container spacing={5} alignItems="flex-end">
+            {challenge.map((data) => {
+              return (
+                <CardForm data={data}/>
+              )
+            })}
           </Grid>
-      </Container>
+        </Container>
 
       </main>
       <Copyright />
